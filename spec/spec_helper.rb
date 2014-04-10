@@ -1,11 +1,11 @@
 require 'trello_lead_time'
-
-Dir["#{File.dirname(__FILE__)}/lib/**/*.rb"].each { |f| require f }
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   config.before(:suite) do
-    TrelloLeadTime.configure do |config|
-      config.public_key = 'foo'
+    Trello.configure do |cfg|
+      cfg.developer_public_key = 'key'
+      cfg.member_token         = 'token'
     end
   end
 end

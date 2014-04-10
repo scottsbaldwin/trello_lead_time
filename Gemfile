@@ -5,3 +5,5 @@ gemspec
 gem "rspec"
 gem 'pry'
 gem 'pry-debugger'
+gem 'ruby-trello'
+gem 'webmock'
