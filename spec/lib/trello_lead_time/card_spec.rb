@@ -1,0 +1,61 @@
+require 'spec_helper'
+
+describe TrelloLeadTime::Card do
+  let(:card_json) {
+    <<-END_OF_JSON
+    {
+      "id": "533dd01513e035206902124c",
+      "badges": {
+        "votes": 0,
+        "viewingMemberVoted": false,
+        "subscribed": false,
+        "fogbugz": "",
+        "checkItems": 1,
+        "checkItemsChecked": 1,
+        "comments": 0,
+        "attachments": 0,
+        "description": true,
+        "due": null
+      },
+      "checkItemStates": [
+        {
+        "idCheckItem": "533eb14b85db7251533b83e2",
+        "state": "complete"
+        }
+      ],
+      "closed": false,
+      "dateLastActivity": "2014-04-11T14:24:41.817Z",
+      "desc": "Here is the description",
+      "descData": {
+        "emoji": {}
+      },
+      "due": null,
+      "idBoard": "520d5aa09b5a997f5a000e6b",
+      "idChecklists": [
+        "533eb1319c4629d21838241b"
+      ],
+      "idList": "533ed74d095149ab1800b032",
+      "idMembers": [
+        "52053cb7497ccfe83a001f75",
+        "520541f8688f3e662400262c"
+      ],
+      "idShort": 1006,
+      "idAttachmentCover": null,
+      "manualCoverAttachment": false,
+      "labels": [],
+      "name": "(3) SEARCH 2.0: Hit HL typeahead and apply filtering/fallbacks",
+      "pos": 81920.375,
+      "shortUrl": "https://trello.com/c/yQxfwOWB",
+      "url": "https://trello.com/c/yQxfwOWB/1006-3-search-2-0-hit-hl-typeahead-and-apply-filtering-fallbacks"
+    }
+    END_OF_JSON
+  }
+
+  describe ".done" do
+    subject { TrelloLeadTime::Card.from_trello_card(Trello::Card.parse(card_json)) }
+
+    it "should be a card" do
+      subject.should be_an_instance_of(TrelloLeadTime::Card)
+    end
+  end
+end

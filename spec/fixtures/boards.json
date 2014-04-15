@@ -1,0 +1,112 @@
+      [
+        {
+          "id": "myboard_id",
+          "name": "Development Team",
+          "desc": "",
+          "descData": null,
+          "closed": false,
+          "idOrganization": "myorg_id",
+          "invited": false,
+          "pinned": true,
+          "starred": false,
+          "url": "http://trello.com/b/1234/board_name",
+          "prefs": {
+            "permissionLevel": "org",
+            "voting": "disabled",
+            "comments": "members",
+            "invitations": "members",
+            "selfJoin": false,
+            "cardCovers": true,
+            "cardAging": "regular",
+            "background": "blue",
+            "backgroundColor": "#23719F",
+            "backgroundImage": null,
+            "backgroundImageScaled": null,
+            "backgroundTile": false,
+            "backgroundBrightness": "unknown",
+            "canBePublic": true,
+            "canBeOrg": true,
+            "canBePrivate": true,
+            "canInvite": true
+          },
+          "invitations": [],
+          "memberships": [
+            {
+            "id": "888888",
+            "idMember": "99999999",
+            "memberType": "admin",
+            "unconfirmed": false,
+            "deactivated": false
+            }
+          ],
+          "shortLink": "123456",
+          "subscribed": false,
+          "labelNames": {
+            "red": "",
+            "orange": "",
+            "yellow": "",
+            "green": "",
+            "blue": "",
+            "purple": ""
+          },
+          "powerUps": [],
+          "dateLastActivity": "2014-03-12T16:57:41.519Z",
+          "dateLastView": "2014-03-27T20:24:34.082Z",
+          "shortUrl": "https://trello.com/b/123456678"
+        },
+        {
+          "id": "888888888",
+          "name": "Customer On-boarding",
+          "desc": "",
+          "descData": null,
+          "closed": false,
+          "idOrganization": "myorg_id",
+          "invited": false,
+          "pinned": true,
+          "starred": false,
+          "url": "https://trello.com/b/1234556888/customer-on-boarding",
+          "prefs": {
+            "permissionLevel": "org",
+            "voting": "disabled",
+            "comments": "members",
+            "invitations": "members",
+            "selfJoin": true,
+            "cardCovers": true,
+            "cardAging": "regular",
+            "background": "blue",
+            "backgroundColor": "#23719F",
+            "backgroundImage": null,
+            "backgroundImageScaled": null,
+            "backgroundTile": false,
+            "backgroundBrightness": "unknown",
+            "canBePublic": true,
+            "canBeOrg": true,
+            "canBePrivate": true,
+            "canInvite": true
+          },
+          "invitations": [],
+          "memberships": [
+            {
+            "id": "88888888888",
+            "idMember": "08831713",
+            "memberType": "admin",
+            "unconfirmed": false,
+            "deactivated": false
+            }
+          ],
+          "shortLink": "777777",
+          "subscribed": false,
+          "labelNames": {
+            "red": "",
+            "orange": "",
+            "yellow": "",
+            "green": "",
+            "blue": "",
+            "purple": ""
+          },
+          "powerUps": [],
+          "dateLastActivity": "2014-03-27T19:23:30.436Z",
+          "dateLastView": "2014-03-26T19:06:08.918Z",
+          "shortUrl": "https://trello.com/b/6666666"
+        }
+      ]

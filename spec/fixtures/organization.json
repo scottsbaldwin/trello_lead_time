@@ -1,0 +1,12 @@
+{
+	"id": "myorg_id",
+	"name": "myorg_name",
+	"displayName": "My Org",
+	"desc": "",
+	"descData": null,
+	"url": "http://trello.com/myorg_name",
+	"website": null,
+	"logoHash": null,
+	"products": [],
+	"powerUps": []
+}
