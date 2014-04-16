@@ -13,6 +13,15 @@ module TrelloLeadTime
       !last_done_action.nil?
     end
 
+    def closed?
+      !closed_date.nil?
+    end
+
+    def closed_date
+      action = actions.detect {|a| a.type =~ /updateCard/i && a.data["old"].has_key?("closed")}
+      action ? action.date : nil
+    end
+
     def age_in_seconds
       @_age ||= calculate_age_in_seconds(creation_date, done_date)
     end
