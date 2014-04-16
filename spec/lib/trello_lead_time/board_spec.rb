@@ -59,19 +59,25 @@ describe TrelloLeadTime::Board do
     end
 
     it "should have a queue time" do
+      TrelloLeadTime.configure do |cfg|
+        cfg.queue_time_lists = queue_lists
+      end
       stub_board_requests
       stub_list_requests
       stub_card_requests
-      queue_time = subject.average_queue_time(list_with_done_cards, queue_lists)
+      queue_time = subject.average_queue_time(list_with_done_cards)
       # 7 days 19 hours 18 minutes 59 seconds
       queue_time.should == 674339
     end
 
     it "should have a cycle time" do
+      TrelloLeadTime.configure do |cfg|
+        cfg.cycle_time_lists = cycle_time_lists
+      end
       stub_board_requests
       stub_list_requests
       stub_card_requests
-      cycle_time = subject.average_cycle_time(list_with_done_cards, cycle_time_lists)
+      cycle_time = subject.average_cycle_time(list_with_done_cards)
       # 5 days 6 hours 2 minutes 34 seconds
       cycle_time.should == 453754
     end

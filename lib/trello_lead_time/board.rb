@@ -26,16 +26,16 @@ module TrelloLeadTime
       list.average_lead_time
     end
 
-    def average_queue_time(name_of_list_with_done_cards, queue_lists = [])
+    def average_queue_time(name_of_list_with_done_cards)
       list = find_list_by_name(name_of_list_with_done_cards)
       return 0 if list.nil?
-      list.average_queue_time(queue_lists)
+      list.average_queue_time
     end
 
-    def average_cycle_time(name_of_list_with_done_cards, cycle_time_lists = [])
+    def average_cycle_time(name_of_list_with_done_cards)
       list = find_list_by_name(name_of_list_with_done_cards)
       return 0 if list.nil?
-      list.average_cycle_time(cycle_time_lists)
+      list.average_cycle_time
     end
 
     private

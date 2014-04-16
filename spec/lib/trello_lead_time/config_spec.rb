@@ -5,6 +5,9 @@ describe TrelloLeadTime::Config do
     subject { TrelloLeadTime::Config }
 
     it "should have default empty list for queue time lists" do
+      TrelloLeadTime.configure do |cfg|
+        cfg.queue_time_lists = nil
+      end
       subject.queue_time_lists.should be_empty
     end
 
@@ -16,6 +19,9 @@ describe TrelloLeadTime::Config do
     end
 
     it "should have default empty list for cycle time lists" do
+      TrelloLeadTime.configure do |cfg|
+        cfg.cycle_time_lists = nil
+      end
       subject.cycle_time_lists.should be_empty
     end
 
