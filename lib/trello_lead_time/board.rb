@@ -13,6 +13,7 @@ module TrelloLeadTime
 
     def initialize(trello_board)
       @trello_board = trello_board
+      @_lists = {}
     end
 
     def name
@@ -25,14 +26,26 @@ module TrelloLeadTime
       list.average_lead_time
     end
 
+    def average_queue_time(name_of_list_with_done_cards, queue_lists = [])
+      list = find_list_by_name(name_of_list_with_done_cards)
+      return 0 if list.nil?
+      list.average_queue_time(queue_lists)
+    end
+
+    def average_cycle_time(name_of_list_with_done_cards, cycle_time_lists = [])
+      list = find_list_by_name(name_of_list_with_done_cards)
+      return 0 if list.nil?
+      list.average_cycle_time(cycle_time_lists)
+    end
+
     private
 
     def find_list_by_name(name)
-      if !@_list
+      if !@_lists.has_key?(name)
         trello_list = @trello_board.lists({filter: 'all'}).detect { |l| l.name == name }
-        @_list = TrelloLeadTime::List.from_trello_list(trello_list) if trello_list
+        @_lists[name] = TrelloLeadTime::List.from_trello_list(trello_list) if trello_list
       end
-      @_list
+      @_lists[name]
     end
 
   end

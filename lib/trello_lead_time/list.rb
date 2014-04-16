@@ -13,22 +13,39 @@ module TrelloLeadTime
     end
 
     def average_lead_time
-      cards = done_or_closed_cards
-      calculate_average_time_of_cards(cards)
+      calculate_average_age_of_cards(cards)
+    end
+
+    def average_queue_time(queue_lists)
+      calculate_average_queue_time_of_cards(cards, queue_lists)
+    end
+
+    def average_cycle_time(cycle_time_lists)
+      calculate_average_cycle_time_of_cards(cards, cycle_time_lists)
     end
 
     private
-
-    def done_or_closed_cards
-      cards.select { |c| c.done? || c.closed? }
-    end
 
     def cards
       @_cards ||= @trello_list.cards.map { |c| TrelloLeadTime::Card.from_trello_card(c) }
     end
 
-    def calculate_average_time_of_cards(cards)
+    def calculate_average_age_of_cards(cards)
       times = cards.map { |c| c.age_in_seconds }
+      average(times)
+    end
+
+    def calculate_average_queue_time_of_cards(cards, queue_lists = [])
+      times = cards.map { |c| c.queue_time(queue_lists) }
+      average(times)
+    end
+
+    def calculate_average_cycle_time_of_cards(cards, cycle_time_lists = [])
+      times = cards.map { |c| c.cycle_time(cycle_time_lists) }
+      average(times)
+    end
+
+    def average(times)
       avg = 0.0
       if times.size > 0
         avg = (times.inject(0.0) { |sum, el| sum + el } / times.size).round(0)

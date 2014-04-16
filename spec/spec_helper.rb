@@ -5,10 +5,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     TrelloLeadTime.configure do |cfg|
       cfg.organization_name = 'wellmatch'
-    end
-    Trello.configure do |cfg|
-      cfg.developer_public_key = 'key'
-      cfg.member_token         = 'token'
+      cfg.set_trello_key_and_token('key', 'token')
     end
   end
 end

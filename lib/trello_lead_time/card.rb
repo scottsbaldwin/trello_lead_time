@@ -24,5 +24,20 @@ module TrelloLeadTime
     def age_in_seconds
       @timeline.age_in_seconds
     end
+
+    def queue_time(queue_lists = [])
+      @_queue_time ||= sum_of_times_in_lists(queue_lists)
+    end
+
+    def cycle_time(cycle_time_lists = [])
+      @_cycle_time ||= sum_of_times_in_lists(cycle_time_lists)
+    end
+
+    private
+
+    def sum_of_times_in_lists(lists)
+      lists.inject(0) { |sum, list_name| sum + @timeline.seconds_in_list(list_name) }
+    end
+
   end
 end
