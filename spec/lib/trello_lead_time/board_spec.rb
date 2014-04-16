@@ -14,8 +14,6 @@ describe TrelloLeadTime::Board do
     let(:list_with_done_cards) { "Done for 2014-03" }
     let(:list_id) { "mylist_id" }
     let(:card_id) { "mycard_id" }
-    let(:queue_lists) { [ "Product Backlog" ] }
-    let(:cycle_time_lists) { [ "Development", "Acceptance" ] }
 
     let(:organization_json) {
       File.read(File.expand_path("../../../fixtures/organization.json", __FILE__))
@@ -59,9 +57,6 @@ describe TrelloLeadTime::Board do
     end
 
     it "should have a queue time" do
-      TrelloLeadTime.configure do |cfg|
-        cfg.queue_time_lists = queue_lists
-      end
       stub_board_requests
       stub_list_requests
       stub_card_requests
@@ -71,9 +66,6 @@ describe TrelloLeadTime::Board do
     end
 
     it "should have a cycle time" do
-      TrelloLeadTime.configure do |cfg|
-        cfg.cycle_time_lists = cycle_time_lists
-      end
       stub_board_requests
       stub_list_requests
       stub_card_requests

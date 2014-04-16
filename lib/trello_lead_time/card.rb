@@ -25,6 +25,10 @@ module TrelloLeadTime
       @timeline.age_in_seconds
     end
 
+    def lead_time
+      @_lead_time ||= queue_time + cycle_time
+    end
+
     def queue_time
       @_queue_time ||= sum_of_times_in_lists(Config.queue_time_lists)
     end
