@@ -20,6 +20,12 @@ module TrelloLeadTime
       @trello_board.name
     end
 
+    def average_age(name_of_list_with_done_cards)
+      list = find_list_by_name(name_of_list_with_done_cards)
+      return 0 if list.nil?
+      list.average_age
+    end
+
     def average_lead_time(name_of_list_with_done_cards)
       list = find_list_by_name(name_of_list_with_done_cards)
       return 0 if list.nil?
