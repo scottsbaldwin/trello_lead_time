@@ -13,18 +13,22 @@ module TrelloLeadTime
     end
 
     def average_lead_time
-      calculate_average_age_of_cards(cards)
+      calculate_average_age_of_cards(done_or_closed_cards)
     end
 
     def average_queue_time(queue_lists)
-      calculate_average_queue_time_of_cards(cards, queue_lists)
+      calculate_average_queue_time_of_cards(done_or_closed_cards, queue_lists)
     end
 
     def average_cycle_time(cycle_time_lists)
-      calculate_average_cycle_time_of_cards(cards, cycle_time_lists)
+      calculate_average_cycle_time_of_cards(done_or_closed_cards, cycle_time_lists)
     end
 
     private
+
+    def done_or_closed_cards
+      @_done_or_closed_cards ||= cards.select { |c| c.done? || c.closed? }
+    end
 
     def cards
       @_cards ||= @trello_list.cards.map { |c| TrelloLeadTime::Card.from_trello_card(c) }
