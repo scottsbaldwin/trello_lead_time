@@ -1,7 +1,7 @@
 require 'trello_lead_time'
 
-developer_public_key     = 'YOUR TRELLO PUBLIC KEY'
-member_token             = 'YOUR TRELLO MEMBER TOKEN'
+developer_public_key       = 'YOUR TRELLO PUBLIC KEY'
+member_token               = 'YOUR TRELLO MEMBER TOKEN'
 organization_name          = 'fogcreek'
 board_url                  = 'https://trello.com/b/nC8QJJoZ/trello-development'
 source_lists               = ['Live (4/8)', 'Live (3/17)', 'Live (3/3)', 'Live (2/11)', 'Live (1/14)']
