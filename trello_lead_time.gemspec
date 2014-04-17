@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['scottsbaldwin@gmail.com']
   spec.summary       = %q{Lead and cycle time calculator for Trello boards.}
   spec.description   = %q{}
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/scottsbaldwin/trello_lead_time'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
