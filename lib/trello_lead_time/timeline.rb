@@ -39,7 +39,7 @@ module TrelloLeadTime
     private
 
     def last_done_action
-      @_last_done_action ||= actions.detect { |a| a.type =~ /updateCard/ && a.data.has_key?("listAfter") && a.data["listAfter"].has_key?("name") && a.data["listAfter"]["name"] =~ /Done/i }
+      @_last_done_action ||= actions.detect { |a| a.type =~ /updateCard/ && a.data.has_key?("listAfter") && a.data["listAfter"].has_key?("name") && a.data["listAfter"]["name"] =~ Config.list_name_matcher_for_done }
     end
 
     def actions

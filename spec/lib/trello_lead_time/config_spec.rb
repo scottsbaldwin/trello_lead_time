@@ -31,5 +31,20 @@ describe TrelloLeadTime::Config do
       end
       subject.cycle_time_lists.should include("my list")
     end
+
+    it "should have default done matcher" do
+      TrelloLeadTime.configure do |cfg|
+        cfg.list_name_matcher_for_done = nil
+      end
+      expect(subject.list_name_matcher_for_done).to eq(/^Done/i)
+    end
+
+    it "should set a default done matcher" do
+      TrelloLeadTime.configure do |cfg|
+        cfg.list_name_matcher_for_done = /^Live/
+      end
+      expect(subject.list_name_matcher_for_done).to eq(/^Live/)
+    end
+
   end
 end

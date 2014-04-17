@@ -5,7 +5,7 @@ module TrelloLeadTime
   module Config
     extend self
 
-    attr_accessor :organization_name, :queue_time_lists, :cycle_time_lists
+    attr_accessor :organization_name, :queue_time_lists, :cycle_time_lists, :list_name_matcher_for_done
 
     def configure
       yield self
@@ -26,6 +26,11 @@ module TrelloLeadTime
     def cycle_time_lists
       @cycle_time_lists = [] if !@cycle_time_lists
       @cycle_time_lists
+    end
+
+    def list_name_matcher_for_done
+      @list_name_matcher_for_done = /^Done/i if !@list_name_matcher_for_done
+      @list_name_matcher_for_done
     end
   end
 end

@@ -8,6 +8,7 @@ RSpec.configure do |config|
       cfg.set_trello_key_and_token('key', 'token')
       cfg.queue_time_lists = ['Product Backlog']
       cfg.cycle_time_lists = ['Development', 'Acceptance']
+      cfg.list_name_matcher_for_done = /^Done/i
     end
   end
 end
