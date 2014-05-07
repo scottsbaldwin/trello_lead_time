@@ -8,7 +8,7 @@
               "id": "3333"
             },
             "listBefore": {
-              "name": "Acceptance",
+              "name": "Acceptance [3]",
               "id": "5555"
             },
             "board": {
@@ -42,11 +42,11 @@
           "idMemberCreator": "1234",
           "data": {
             "listAfter": {
-              "name": "Acceptance",
+              "name": "Acceptance [3]",
               "id": "5555"
             },
             "listBefore": {
-              "name": "Development",
+              "name": "Development [2]",
               "id": "2222"
             },
             "board": {
@@ -80,7 +80,7 @@
           "idMemberCreator": "1234",
           "data": {
             "listAfter": {
-              "name": "Development",
+              "name": "Development [2]",
               "id": "2222"
             },
             "listBefore": {

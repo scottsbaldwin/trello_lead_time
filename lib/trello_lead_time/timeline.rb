@@ -1,5 +1,7 @@
 module TrelloLeadTime
   class Timeline
+    include ArraySearcher
+
     def self.for_trello_card(trello_card)
       Timeline.new(trello_card)
     end
@@ -31,7 +33,7 @@ module TrelloLeadTime
     end
 
     def seconds_in_list(list_name)
-      matched_list = @_seconds_in_list.values.detect { |list| list[:list_name] == list_name }
+      matched_list = @_seconds_in_list.values.detect { |list| element_matches_expression?(list[:list_name], list_name) }
       return matched_list[:seconds_in_list] if !matched_list.nil?
       0
     end

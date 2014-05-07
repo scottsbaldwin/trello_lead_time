@@ -1,5 +1,6 @@
 module TrelloLeadTime
   class Board
+    include ArraySearcher
 
     def self.from_url(url)
       @org = Trello::Organization.find(TrelloLeadTime::Config.organization_name)
@@ -47,8 +48,9 @@ module TrelloLeadTime
     private
 
     def find_list_by_name(name)
-      if !@_lists.has_key?(name)
-        trello_list = @trello_board.lists({filter: 'all'}).detect { |l| l.name == name }
+      matched_name = find_name_like(@_lists.keys, name)
+      if matched_name.nil?
+        trello_list = @trello_board.lists({filter: 'all'}).detect { |l| element_matches_expression?(l.name, name) }
         @_lists[name] = TrelloLeadTime::List.from_trello_list(trello_list) if trello_list
       end
       @_lists[name]
