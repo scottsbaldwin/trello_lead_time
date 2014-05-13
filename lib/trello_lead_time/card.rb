@@ -37,10 +37,32 @@ module TrelloLeadTime
       @_cycle_time ||= sum_of_times_in_lists(Config.cycle_time_lists)
     end
 
+    def has_label_name?(name)
+      match = labels.find { |l| l.name =~ /^#{Regexp.quote(name)}$/i }
+      !match.nil?
+    end
+
+    def has_label_color?(color)
+      match = labels.find { |l| l.color =~ /^#{Regexp.quote(color)}$/i }
+      !match.nil?
+    end
+
+    def hash_tags
+      comments.select { |comment| comment =~ /^#(.+)$/ } || []
+    end
+
     private
 
     def sum_of_times_in_lists(lists)
       lists.inject(0) { |sum, list_name| sum + @timeline.seconds_in_list(list_name) }
+    end
+
+    def labels
+      @_labels ||= @trello_card.labels
+    end
+
+    def comments
+      @_comments ||= @trello_card.actions(filter:"commentCard").map { |comment| comment.data['text'] }
     end
 
   end
