@@ -45,6 +45,18 @@ module TrelloLeadTime
       list.average_cycle_time
     end
 
+    def averages(name_of_list_with_done_cards)
+      list = find_list_by_name(name_of_list_with_done_cards)
+      response = default_format
+      return response if list.nil?
+
+      response[:lead_time][:overall] = list.average_lead_time
+      response[:queue_time][:overall] = list.average_queue_time
+      response[:cycle_time][:overall] = list.average_cycle_time
+      response[:age][:overall] = list.average_age
+      response
+    end
+
     private
 
     def find_list_by_name(name)
@@ -54,6 +66,23 @@ module TrelloLeadTime
         @_lists[name] = TrelloLeadTime::List.from_trello_list(trello_list) if trello_list
       end
       @_lists[name]
+    end
+
+    def default_format
+      {
+        lead_time: default_entry,
+        queue_time: default_entry,
+        cycle_time: default_entry,
+        age: default_entry,
+      }
+    end
+
+    def default_entry
+      {
+        overall: 0,
+        initiatives: {},
+        finance_types: {}
+      }
     end
 
   end

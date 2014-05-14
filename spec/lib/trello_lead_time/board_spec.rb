@@ -47,6 +47,45 @@ describe TrelloLeadTime::Board do
       subject.should be_an_instance_of(TrelloLeadTime::Board)
     end
 
+    describe ".averages" do
+      let(:averages) { subject.averages(list_with_done_cards) }
+
+      it "should have an overall lead time" do
+        stub_board_requests
+        stub_list_requests
+        stub_card_requests
+
+        # 13 days 1 hours 21 minutes 33 seconds
+        averages[:lead_time][:overall].should == 1128093
+      end
+
+      it "should have an overall queue time" do
+        stub_board_requests
+        stub_list_requests
+        stub_card_requests
+
+        # 7 days 19 hours 18 minutes 59 seconds
+        averages[:queue_time][:overall].should == 674339
+      end
+
+      it "should have an overall cycle time" do
+        stub_board_requests
+        stub_list_requests
+        stub_card_requests
+
+        # 5 days 6 hours 2 minutes 34 seconds
+        averages[:cycle_time][:overall].should == 453754
+      end
+
+      it "should have an overall age" do
+        stub_board_requests
+        stub_list_requests
+        stub_card_requests
+
+        averages[:age][:overall].should == 1128093
+      end
+    end
+
     it "should have a lead time" do
       stub_board_requests
       stub_list_requests
