@@ -12,20 +12,44 @@ module TrelloLeadTime
       @trello_list.name
     end
 
-    def average_age
-      calculate_average_age_of_cards
+    def total_lead_time
+      times = done_or_closed_cards.collect(&:lead_time)
+      total(times)
     end
 
     def average_lead_time
-      calculate_average_lead_time_of_cards
+      times = done_or_closed_cards.collect(&:lead_time)
+      average(times)
+    end
+
+    def total_queue_time
+      times = done_or_closed_cards.collect(&:queue_time)
+      total(times)
     end
 
     def average_queue_time
-      calculate_average_queue_time_of_cards
+      times = done_or_closed_cards.collect(&:queue_time)
+      average(times)
+    end
+
+    def total_cycle_time
+      times = done_or_closed_cards.collect(&:cycle_time)
+      total(times)
     end
 
     def average_cycle_time
-      calculate_average_cycle_time_of_cards
+      times = done_or_closed_cards.collect(&:cycle_time)
+      average(times)
+    end
+
+    def total_age
+      times = done_or_closed_cards.collect(&:age_in_seconds)
+      total(times)
+    end
+
+    def average_age
+      times = done_or_closed_cards.collect(&:age_in_seconds)
+      average(times)
     end
 
     private
@@ -38,24 +62,8 @@ module TrelloLeadTime
       @_cards ||= @trello_list.cards.map { |c| TrelloLeadTime::Card.from_trello_card(c) }
     end
 
-    def calculate_average_age_of_cards
-      times = done_or_closed_cards.map { |c| c.age_in_seconds }
-      average(times)
-    end
-
-    def calculate_average_lead_time_of_cards
-      times = done_or_closed_cards.map { |c| c.lead_time }
-      average(times)
-    end
-
-    def calculate_average_queue_time_of_cards
-      times = done_or_closed_cards.map { |c| c.queue_time }
-      average(times)
-    end
-
-    def calculate_average_cycle_time_of_cards
-      times = done_or_closed_cards.map { |c| c.cycle_time }
-      average(times)
+    def total(times)
+      times.inject(0) { |sum, el| sum + el }
     end
 
     def average(times)

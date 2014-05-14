@@ -8,6 +8,7 @@ module TrelloLeadTime
     attr_accessor :organization_name, :queue_time_lists, :cycle_time_lists, :list_name_matcher_for_done
 
     def configure
+      reset!
       yield self
     end
 
@@ -32,5 +33,14 @@ module TrelloLeadTime
       @list_name_matcher_for_done = /^Done/i if !@list_name_matcher_for_done
       @list_name_matcher_for_done
     end
+  end
+
+  private
+
+  def reset!
+    @organization_name          = nil
+    @queue_time_lists           = nil
+    @cycle_time_lists           = nil
+    @list_name_matcher_for_done = nil
   end
 end

@@ -21,28 +21,16 @@ module TrelloLeadTime
       @trello_board.name
     end
 
-    def average_age(name_of_list_with_done_cards)
+    def totals(name_of_list_with_done_cards)
       list = find_list_by_name(name_of_list_with_done_cards)
-      return 0 if list.nil?
-      list.average_age
-    end
+      response = default_format
+      return response if list.nil?
 
-    def average_lead_time(name_of_list_with_done_cards)
-      list = find_list_by_name(name_of_list_with_done_cards)
-      return 0 if list.nil?
-      list.average_lead_time
-    end
-
-    def average_queue_time(name_of_list_with_done_cards)
-      list = find_list_by_name(name_of_list_with_done_cards)
-      return 0 if list.nil?
-      list.average_queue_time
-    end
-
-    def average_cycle_time(name_of_list_with_done_cards)
-      list = find_list_by_name(name_of_list_with_done_cards)
-      return 0 if list.nil?
-      list.average_cycle_time
+      response[:lead_time][:overall] = list.total_lead_time
+      response[:queue_time][:overall] = list.total_queue_time
+      response[:cycle_time][:overall] = list.total_cycle_time
+      response[:age][:overall] = list.total_age
+      response
     end
 
     def averages(name_of_list_with_done_cards)

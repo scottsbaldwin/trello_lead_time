@@ -4,117 +4,98 @@ describe TrelloLeadTime::Board do
   let(:key) { "key" }
   let(:token) { "token" }
 
-  describe ".from_url" do
-    let(:organization_id) { "myorg_id" }
-    let(:organization_name) { "myorg_name" }
-    let(:url) { "https://trello.com/#{organization_name}" }
-    let(:board_url) { "http://trello.com/b/1234/board_name" }
-    let(:board_id) { "myboard_id" }
-    let(:board_name) { "Development Team" }
-    let(:list_with_done_cards) { "Done for 2014-03" }
-    let(:list_id) { "mylist_id" }
-    let(:card_id) { "mycard_id" }
+  let(:organization_id) { "myorg_id" }
+  let(:organization_name) { "myorg_name" }
+  let(:url) { "https://trello.com/#{organization_name}" }
+  let(:board_url) { "http://trello.com/b/1234/board_name" }
+  let(:board_id) { "myboard_id" }
+  let(:board_name) { "Development Team" }
+  let(:list_with_done_cards) { "Done for 2014-03" }
+  let(:list_id) { "mylist_id" }
+  let(:card_id) { "mycard_id" }
 
-    let(:organization_json) {
-      File.read(File.expand_path("../../../fixtures/organization.json", __FILE__))
+  let(:organization_json) {
+    File.read(File.expand_path("../../../fixtures/organization.json", __FILE__))
+  }
+
+  let(:boards_json) {
+    File.read(File.expand_path("../../../fixtures/boards.json", __FILE__))
+  }
+
+  let(:lists_json) {
+    File.read(File.expand_path("../../../fixtures/lists.json", __FILE__))
+  }
+
+  let(:cards_json) {
+    File.read(File.expand_path("../../../fixtures/cards.json", __FILE__))
+  }
+
+  let(:actions_json) {
+    {
+      "1111" => File.read(File.expand_path("../../../fixtures/actions.1111.json", __FILE__)),
+      "2222" => File.read(File.expand_path("../../../fixtures/actions.2222.json", __FILE__)),
+      "3333" => File.read(File.expand_path("../../../fixtures/actions.3333.json", __FILE__)),
+      "4444" => File.read(File.expand_path("../../../fixtures/actions.4444.json", __FILE__))
     }
+  }
 
-    let(:boards_json) {
-      File.read(File.expand_path("../../../fixtures/boards.json", __FILE__))
-    }
+  subject { TrelloLeadTime::Board.from_url(board_url) }
 
-    let(:lists_json) {
-      File.read(File.expand_path("../../../fixtures/lists.json", __FILE__))
-    }
+  describe ".totals" do
+    let(:totals) { subject.totals(list_with_done_cards) }
 
-    let(:cards_json) {
-      File.read(File.expand_path("../../../fixtures/cards.json", __FILE__))
-    }
-
-    let(:actions_json) {
-      {
-        "1111" => File.read(File.expand_path("../../../fixtures/actions.1111.json", __FILE__)),
-        "2222" => File.read(File.expand_path("../../../fixtures/actions.2222.json", __FILE__)),
-        "3333" => File.read(File.expand_path("../../../fixtures/actions.3333.json", __FILE__)),
-        "4444" => File.read(File.expand_path("../../../fixtures/actions.4444.json", __FILE__))
-      }
-    }
-
-    subject { TrelloLeadTime::Board.from_url(board_url) }
-
-    it "should return a board" do
-      stub_board_requests
-      subject.should be_an_instance_of(TrelloLeadTime::Board)
+    it "should have an overall lead time" do
+      stub_all_requests
+      totals[:lead_time][:overall].should == 4512370
     end
 
-    describe ".averages" do
-      let(:averages) { subject.averages(list_with_done_cards) }
-
-      it "should have an overall lead time" do
-        stub_board_requests
-        stub_list_requests
-        stub_card_requests
-
-        # 13 days 1 hours 21 minutes 33 seconds
-        averages[:lead_time][:overall].should == 1128093
-      end
-
-      it "should have an overall queue time" do
-        stub_board_requests
-        stub_list_requests
-        stub_card_requests
-
-        # 7 days 19 hours 18 minutes 59 seconds
-        averages[:queue_time][:overall].should == 674339
-      end
-
-      it "should have an overall cycle time" do
-        stub_board_requests
-        stub_list_requests
-        stub_card_requests
-
-        # 5 days 6 hours 2 minutes 34 seconds
-        averages[:cycle_time][:overall].should == 453754
-      end
-
-      it "should have an overall age" do
-        stub_board_requests
-        stub_list_requests
-        stub_card_requests
-
-        averages[:age][:overall].should == 1128093
-      end
+    it "should have an overall queue time" do
+      stub_all_requests
+      totals[:queue_time][:overall].should == 2697355
     end
 
-    it "should have a lead time" do
-      stub_board_requests
-      stub_list_requests
-      stub_card_requests
-      lead_time = subject.average_lead_time(list_with_done_cards)
-      # 13 days 1 hours 21 minutes 33 seconds
-      lead_time.should == 1128093
+    it "should have an overall cycle time" do
+      stub_all_requests
+      totals[:cycle_time][:overall].should == 1815015
     end
 
-    it "should have a queue time" do
-      stub_board_requests
-      stub_list_requests
-      stub_card_requests
-      queue_time = subject.average_queue_time(list_with_done_cards)
-      # 7 days 19 hours 18 minutes 59 seconds
-      queue_time.should == 674339
+    it "should have an overall age" do
+      stub_all_requests
+      totals[:age][:overall].should == 4512370
+    end
+  end
+
+  describe ".averages" do
+    let(:averages) { subject.averages(list_with_done_cards) }
+
+    it "should have an overall lead time" do
+      stub_all_requests
+      averages[:lead_time][:overall].should == 1128093
     end
 
-    it "should have a cycle time" do
-      stub_board_requests
-      stub_list_requests
-      stub_card_requests
-      cycle_time = subject.average_cycle_time(list_with_done_cards)
-      # 5 days 6 hours 2 minutes 34 seconds
-      cycle_time.should == 453754
+    it "should have an overall queue time" do
+      stub_all_requests
+      averages[:queue_time][:overall].should == 674339
+    end
+
+    it "should have an overall cycle time" do
+      stub_all_requests
+      averages[:cycle_time][:overall].should == 453754
+    end
+
+    it "should have an overall age" do
+      stub_all_requests
+      averages[:age][:overall].should == 1128093
     end
   end
 
   private
+
+  def stub_all_requests
+    stub_board_requests
+    stub_list_requests
+    stub_card_requests
+  end
 
   def stub_board_requests
     stub_request(:get, "https://api.trello.com/1/organizations/wellmatch?key=#{key}&token=#{token}").
