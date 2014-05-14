@@ -23,11 +23,20 @@ puts "#{board_url}"
 puts "-" * 40
 
 board = TrelloLeadTime::Board.from_url board_url
+
 source_lists.each do |source_list|
+  totals   = board.totals(source_list)
+  averages = board.averages(source_list)
+
   puts "Using cards in list: #{source_list}"
-  puts "Average Card Age:    #{TrelloLeadTime::TimeHumanizer.humanize_seconds(board.average_age(source_list))}"
-  puts "Average Lead Time:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(board.average_lead_time(source_list))}"
-  puts "Average Queue Time:  #{TrelloLeadTime::TimeHumanizer.humanize_seconds(board.average_queue_time(source_list))}"
-  puts "Average Cycle Time:  #{TrelloLeadTime::TimeHumanizer.humanize_seconds(board.average_cycle_time(source_list))}"
+  puts "\tAverage Card Age:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:age][:overall])}"
+  puts "\tAverage Lead Time:  #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:lead_time][:overall])}"
+  puts "\tAverage Queue Time: #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:queue_time][:overall])}"
+  puts "\tAverage Cycle Time: #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:lead_time][:overall])}"
+  puts ""
+  puts "\tTotal Card Age:     #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:age][:overall])}"
+  puts "\tTotal Lead Time:    #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:lead_time][:overall])}"
+  puts "\tTotal Queue Time:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:queue_time][:overall])}"
+  puts "\tTotal Cycle Time:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:lead_time][:overall])}"
   puts ""
 end

@@ -55,7 +55,7 @@ When analyzing the timeline of each Trello card, the gem has to find out when it
 You must provide a regular expression that will be compared to the names of lists a Trello card was in (at some point of its life) to identify when it was marked done.
 
     list_name_matcher_for_done = /^Live/
-    
+
 Now that all those variables are set, you can configure the gem!
 
     TrelloLeadTime.configure do |cfg|
@@ -75,14 +75,22 @@ Easy right? Now let's put it to use!
 
     board = TrelloLeadTime::Board.from_url board_url
     source_lists.each do |source_list|
+      totals   = board.totals(source_list)
+      averages = board.averages(source_list)
+
       puts "Using cards in list: #{source_list}"
-      puts "Average Card Age:    #{TrelloLeadTime::TimeHumanizer.humanize_seconds(board.average_age(source_list))}"
-      puts "Average Lead Time:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(board.average_lead_time(source_list))}"
-      puts "Average Queue Time:  #{TrelloLeadTime::TimeHumanizer.humanize_seconds(board.average_queue_time(source_list))}"
-      puts "Average Cycle Time:  #{TrelloLeadTime::TimeHumanizer.humanize_seconds(board.average_cycle_time(source_list))}"
+      puts "\tAverage Card Age:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:age][:overall])}"
+      puts "\tAverage Lead Time:  #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:lead_time][:overall])}"
+      puts "\tAverage Queue Time: #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:queue_time][:overall])}"
+      puts "\tAverage Cycle Time: #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:lead_time][:overall])}"
+      puts ""
+      puts "\tTotal Card Age:     #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:age][:overall])}"
+      puts "\tTotal Lead Time:    #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:lead_time][:overall])}"
+      puts "\tTotal Queue Time:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:queue_time][:overall])}"
+      puts "\tTotal Cycle Time:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:lead_time][:overall])}"
       puts ""
     end
 
-For each of the source lists, the cards are analyzed and aggregate (average) metrics are displayed. This takes some time because the Trello API must be hit for each card being analyzed. Therefore, the longer the lists in Trello, the longer it takes to process.
+For each of the source lists, the cards are analyzed and aggregate (average and total) metrics are displayed. This takes some time because the Trello API must be hit for each card being analyzed. Therefore, the longer the lists in Trello, the longer it takes to process.
 
 See [sample.rb](sample.rb) for an entire listing of the explanation above.
