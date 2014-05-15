@@ -41,7 +41,7 @@
                         "name": "some card name",
                         "id": "83716489"
                   },
-                  "text": "#myhashtag"
+                  "text": "#tag1 #tag2 #tag3"
             },
             "type": "commentCard",
             "date": "2014-05-12T14:14:59.223Z",

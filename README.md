@@ -50,6 +50,10 @@ Now, configure how you will calculate the metrics.
     queue_time_lists     = ['Next Up']
     cycle_time_lists     = ['In Progress', 'Testing']
 
+Lead time analysis can be performed on a per-label basis. Create an array of labels and for which you want to get the total lead time of cards with those labels.
+
+    finance_type_labels        = ['Feature', 'Bug']
+
 When analyzing the timeline of each Trello card, the gem has to find out when it was moved into a "Done" state. This usually is the event when the card is placed in the one of the `source_lists`, e.g. "Live (4/8)". 
 
 You must provide a regular expression that will be compared to the names of lists a Trello card was in (at some point of its life) to identify when it was marked done.
@@ -59,11 +63,12 @@ You must provide a regular expression that will be compared to the names of list
 Now that all those variables are set, you can configure the gem!
 
     TrelloLeadTime.configure do |cfg|
-      cfg.organization_name = organization_name
-      cfg.set_trello_key_and_token(developer_public_key, member_token)
-      cfg.queue_time_lists = queue_time_lists
-      cfg.cycle_time_lists = cycle_time_lists
+      cfg.organization_name          = organization_name
+      cfg.queue_time_lists           = queue_time_lists
+      cfg.cycle_time_lists           = cycle_time_lists
+      cfg.finance_type_labels        = finance_type_labels
       cfg.list_name_matcher_for_done = /^Live/
+      cfg.set_trello_key_and_token(developer_public_key, member_token)
     end
 
 Easy right? Now let's put it to use!
@@ -78,7 +83,7 @@ Easy right? Now let's put it to use!
       totals   = board.totals(source_list)
       averages = board.averages(source_list)
 
-      puts "Using cards in list: #{source_list}"
+      puts "Overall metrics for: #{source_list}"
       puts "\tAverage Card Age:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:age][:overall])}"
       puts "\tAverage Lead Time:  #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:lead_time][:overall])}"
       puts "\tAverage Queue Time: #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:queue_time][:overall])}"
@@ -88,6 +93,11 @@ Easy right? Now let's put it to use!
       puts "\tTotal Lead Time:    #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:lead_time][:overall])}"
       puts "\tTotal Queue Time:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:queue_time][:overall])}"
       puts "\tTotal Cycle Time:   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:lead_time][:overall])}"
+      puts ""
+      puts "\tFinance type breakdown (total lead time per label):"
+      totals[:lead_time][:finance_types].each do |label, value|
+          puts "\t\t#{label}: #{TrelloLeadTime::TimeHumanizer.humanize_seconds(value)}"
+      end
       puts ""
     end
 

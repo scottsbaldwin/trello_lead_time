@@ -42,7 +42,15 @@ describe TrelloLeadTime::Card do
   describe ".hash_tags" do
     it "should have a hash tag" do
       do_stubs(key, token)
-      expect(subject.hash_tags).to eq(['#myhashtag'])
+      expect(subject.hash_tags).to eq(%w{#tag1 #tag2 #tag3})
+    end
+  end
+
+  describe ".labels" do
+    it "should have labels" do
+      do_stubs(key, token)
+      expect(subject.labels.collect(&:name)).to eq(%w{iOS API})
+
     end
   end
 

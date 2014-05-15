@@ -52,6 +52,34 @@ module TrelloLeadTime
       average(times)
     end
 
+    def breakdown_by_labels(labels)
+      times = default_breakdown_by_labels(labels)
+
+      done_or_closed_cards.each do |card|
+        matches = labels & card.labels.map(&:name)
+        matches.each do |label|
+          times[:total][:lead_time][label] += card.lead_time
+          times[:total][:queue_time][label] += card.queue_time
+          times[:total][:cycle_time][label] += card.cycle_time
+          times[:total][:age][label] += card.age_in_seconds
+
+          times[:average][:lead_time][label].push card.lead_time
+          times[:average][:queue_time][label].push card.queue_time
+          times[:average][:cycle_time][label].push card.cycle_time
+          times[:average][:age][label].push card.age_in_seconds
+        end
+      end
+
+      labels.each do |label|
+        times[:average][:lead_time][label] = average(times[:average][:lead_time][label])
+        times[:average][:queue_time][label] = average(times[:average][:queue_time][label])
+        times[:average][:cycle_time][label] = average(times[:average][:cycle_time][label])
+        times[:average][:age][label] = average(times[:average][:age][label])
+      end
+
+      times
+    end
+
     private
 
     def done_or_closed_cards
@@ -73,5 +101,25 @@ module TrelloLeadTime
       end
       avg
     end
+
+    def default_breakdown_by_labels(labels)
+      times = {
+        total: { lead_time: {}, queue_time: {}, cycle_time: {}, age: {} },
+        average: { lead_time: {}, queue_time: {}, cycle_time: {}, age: {} }
+      }
+      labels.each do |label|
+        times[:total][:lead_time][label]  = 0
+        times[:total][:queue_time][label] = 0
+        times[:total][:cycle_time][label] = 0
+        times[:total][:age][label]        = 0
+
+        times[:average][:lead_time][label]  = []
+        times[:average][:queue_time][label] = []
+        times[:average][:cycle_time][label] = []
+        times[:average][:age][label]        = []
+      end
+      times
+    end
+
   end
 end

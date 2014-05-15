@@ -39,6 +39,15 @@ describe TrelloLeadTime::Board do
     }
   }
 
+  let(:labels_json) {
+    {
+      "1111" => File.read(File.expand_path("../../../fixtures/labels.1111.json", __FILE__)),
+      "2222" => File.read(File.expand_path("../../../fixtures/labels.2222.json", __FILE__)),
+      "3333" => File.read(File.expand_path("../../../fixtures/labels.3333.json", __FILE__)),
+      "4444" => File.read(File.expand_path("../../../fixtures/labels.4444.json", __FILE__))
+    }
+  }
+
   subject { TrelloLeadTime::Board.from_url(board_url) }
 
   describe ".totals" do
@@ -63,6 +72,26 @@ describe TrelloLeadTime::Board do
       stub_all_requests
       totals[:age][:overall].should == 4512370
     end
+
+    it "should have a lead time breakdown by finance type" do
+      stub_all_requests
+      totals[:lead_time][:finance_types].should == {"CapEx" => 1664755, "OpEx" => 474615}
+    end
+
+    it "should have a queue time breakdown by finance type" do
+      stub_all_requests
+      totals[:queue_time][:finance_types].should == {"CapEx" => 864055, "OpEx" => 177300}
+    end
+
+    it "should have a cycle time breakdown by finance type" do
+      stub_all_requests
+      totals[:cycle_time][:finance_types].should == {"CapEx" => 800700, "OpEx" => 297315}
+    end
+
+    it "should have an age breakdown by finance type" do
+      stub_all_requests
+      totals[:age][:finance_types].should == {"CapEx" => 1664755, "OpEx" => 474615}
+    end
   end
 
   describe ".averages" do
@@ -86,6 +115,26 @@ describe TrelloLeadTime::Board do
     it "should have an overall age" do
       stub_all_requests
       averages[:age][:overall].should == 1128093
+    end
+
+    it "should have a lead time breakdown by finance type" do
+      stub_all_requests
+      averages[:lead_time][:finance_types].should == {"CapEx" => 832378, "OpEx" => 474615}
+    end
+
+    it "should have a queue time breakdown by finance type" do
+      stub_all_requests
+      averages[:queue_time][:finance_types].should == {"CapEx" => 432028, "OpEx" => 177300}
+    end
+
+    it "should have a cycle time breakdown by finance type" do
+      stub_all_requests
+      averages[:cycle_time][:finance_types].should == {"CapEx" => 400350, "OpEx" => 297315}
+    end
+
+    it "should have an age breakdown by finance type" do
+      stub_all_requests
+      averages[:age][:finance_types].should == {"CapEx" => 832378, "OpEx" => 474615}
     end
   end
 
@@ -122,6 +171,10 @@ describe TrelloLeadTime::Board do
       stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/actions?filter=createCard,updateCard:idList,updateCard:closed&key=#{key}&token=#{token}").
         with(headers).
         to_return(stub_returns(actions_json[card_id]))
+
+      stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/labels?key=#{key}&token=#{token}").
+        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
+        to_return(:status => 200, :body => labels_json[card_id], :headers => {})
     end
   end
 

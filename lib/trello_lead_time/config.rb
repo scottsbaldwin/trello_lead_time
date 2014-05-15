@@ -5,7 +5,7 @@ module TrelloLeadTime
   module Config
     extend self
 
-    attr_accessor :organization_name, :queue_time_lists, :cycle_time_lists, :list_name_matcher_for_done
+    attr_accessor :organization_name, :queue_time_lists, :cycle_time_lists, :finance_type_labels, :list_name_matcher_for_done
 
     def configure
       reset!
@@ -27,6 +27,11 @@ module TrelloLeadTime
     def cycle_time_lists
       @cycle_time_lists = [] if !@cycle_time_lists
       @cycle_time_lists
+    end
+
+    def finance_type_labels
+      @finance_type_labels = %w{CapEx OpEx} if !@finance_type_labels
+      @finance_type_labels
     end
 
     def list_name_matcher_for_done

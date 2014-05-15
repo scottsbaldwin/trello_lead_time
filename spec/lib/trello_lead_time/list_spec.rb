@@ -27,6 +27,19 @@ describe TrelloLeadTime::List do
     }
   }
 
+  let(:labels_json) {
+    {
+      "1111" => File.read(File.expand_path("../../../fixtures/labels.1111.json", __FILE__)),
+      "2222" => File.read(File.expand_path("../../../fixtures/labels.2222.json", __FILE__)),
+      "3333" => File.read(File.expand_path("../../../fixtures/labels.3333.json", __FILE__)),
+      "4444" => File.read(File.expand_path("../../../fixtures/labels.4444.json", __FILE__))
+    }
+  }
+
+  let(:labels) {
+    %w{CapEx OpEx}
+  }
+
   subject { TrelloLeadTime::List.from_trello_list(list) }
 
   it "should have an average age" do
@@ -69,6 +82,54 @@ describe TrelloLeadTime::List do
     subject.total_cycle_time.should == 1815015
   end
 
+  it "should have total lead times by label" do
+    stub_all_requests
+    times = subject.breakdown_by_labels(labels)
+    expect(times[:total][:lead_time]).to eq({"CapEx" => 1664755, "OpEx" => 474615})
+  end
+
+  it "should have total queue times by label" do
+    stub_all_requests
+    times = subject.breakdown_by_labels(labels)
+    expect(times[:total][:queue_time]).to eq({"CapEx" => 864055, "OpEx" => 177300})
+  end
+
+  it "should have total cycle times by label" do
+    stub_all_requests
+    times = subject.breakdown_by_labels(labels)
+    expect(times[:total][:cycle_time]).to eq({"CapEx" => 800700, "OpEx" => 297315})
+  end
+
+  it "should have total ages by label" do
+    stub_all_requests
+    times = subject.breakdown_by_labels(labels)
+    expect(times[:total][:age]).to eq({"CapEx" => 1664755, "OpEx" => 474615})
+  end
+
+  it "should have average lead times by label" do
+    stub_all_requests
+    times = subject.breakdown_by_labels(labels)
+    expect(times[:average][:lead_time]).to eq({"CapEx" => 832378, "OpEx" => 474615})
+  end
+
+  it "should have average queue times by label" do
+    stub_all_requests
+    times = subject.breakdown_by_labels(labels)
+    expect(times[:average][:queue_time]).to eq({"CapEx" => 432028, "OpEx" => 177300})
+  end
+
+  it "should have average cycle times by label" do
+    stub_all_requests
+    times = subject.breakdown_by_labels(labels)
+    expect(times[:average][:cycle_time]).to eq({"CapEx" => 400350, "OpEx" => 297315})
+  end
+
+  it "should have average ages by label" do
+    stub_all_requests
+    times = subject.breakdown_by_labels(labels)
+    expect(times[:average][:age]).to eq({"CapEx" => 832378, "OpEx" => 474615})
+  end
+
   private
 
   def stub_all_requests
@@ -87,7 +148,13 @@ describe TrelloLeadTime::List do
       stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/actions?filter=createCard,updateCard:idList,updateCard:closed&key=#{key}&token=#{token}").
         with(headers).
         to_return(stub_returns(actions_json[card_id]))
+
+      stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/labels?key=#{key}&token=#{token}").
+        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
+        to_return(:status => 200, :body => labels_json[card_id], :headers => {})
+
     end
+
   end
 
   def headers

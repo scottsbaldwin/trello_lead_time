@@ -48,17 +48,22 @@ module TrelloLeadTime
     end
 
     def hash_tags
-      comments.select { |comment| comment =~ /^#(.+)$/ } || []
+      comments_with_tags = comments.select { |comment| comment =~ /^#(.+)$/ } || []
+      tags = []
+      comments_with_tags.each do |comment|
+        tags.concat(comment.split.find_all { |word| /^#.+/.match(word) })
+      end
+      tags
+    end
+
+    def labels
+      @_labels ||= @trello_card.labels.map { |label| OpenStruct.new({name: label.name, color: label.color}) }
     end
 
     private
 
     def sum_of_times_in_lists(lists)
       lists.inject(0) { |sum, list_name| sum + @timeline.seconds_in_list(list_name) }
-    end
-
-    def labels
-      @_labels ||= @trello_card.labels
     end
 
     def comments
