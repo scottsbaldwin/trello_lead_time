@@ -36,6 +36,15 @@ describe TrelloLeadTime::List do
     }
   }
 
+  let(:comments_json) {
+    {
+      "1111" => File.read(File.expand_path("../../../fixtures/comments.1111.json", __FILE__)),
+      "2222" => File.read(File.expand_path("../../../fixtures/comments.2222.json", __FILE__)),
+      "3333" => File.read(File.expand_path("../../../fixtures/comments.3333.json", __FILE__)),
+      "4444" => File.read(File.expand_path("../../../fixtures/comments.4444.json", __FILE__))
+    }
+  }
+
   let(:labels) {
     %w{CapEx OpEx}
   }
@@ -130,6 +139,54 @@ describe TrelloLeadTime::List do
     expect(times[:average][:age]).to eq({"CapEx" => 832378, "OpEx" => 474615})
   end
 
+  it "should have total lead times by tag" do
+    stub_all_requests
+    times = subject.breakdown_by_tags
+    expect(times[:total][:lead_time]).to eq({"#tag1" => 428155, "#tag2" => 1711215, "#tag3" => 2373000})
+  end
+
+  it "should have total queue times by tag" do
+    stub_all_requests
+    times = subject.breakdown_by_tags
+    expect(times[:total][:queue_time]).to eq({"#tag1" => 327355, "#tag2" => 714000, "#tag3" => 1656000})
+  end
+
+  it "should have total cycle times by tag" do
+    stub_all_requests
+    times = subject.breakdown_by_tags
+    expect(times[:total][:cycle_time]).to eq({"#tag1" => 100800, "#tag2" => 997215, "#tag3" => 717000})
+  end
+
+  it "should have total ages by tag" do
+    stub_all_requests
+    times = subject.breakdown_by_tags
+    expect(times[:total][:age]).to eq({"#tag1" => 428155, "#tag2" => 1711215, "#tag3" => 2373000})
+  end
+
+  it "should have average lead times by tag" do
+    stub_all_requests
+    times = subject.breakdown_by_tags
+    expect(times[:average][:lead_time]).to eq({"#tag1" => 428155, "#tag2" => 855608, "#tag3" => 2373000})
+  end
+
+  it "should have average queue times by tag" do
+    stub_all_requests
+    times = subject.breakdown_by_tags
+    expect(times[:average][:queue_time]).to eq({"#tag1" => 327355, "#tag2" => 357000, "#tag3" => 1656000})
+  end
+
+  it "should have average cycle times by tag" do
+    stub_all_requests
+    times = subject.breakdown_by_tags
+    expect(times[:average][:cycle_time]).to eq({"#tag1" => 100800, "#tag2" => 498608, "#tag3" => 717000})
+  end
+
+  it "should have average ages by tag" do
+    stub_all_requests
+    times = subject.breakdown_by_tags
+    expect(times[:average][:age]).to eq({"#tag1" => 428155, "#tag2" => 855608, "#tag3" => 2373000})
+  end
+
   private
 
   def stub_all_requests
@@ -153,6 +210,9 @@ describe TrelloLeadTime::List do
         with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
         to_return(:status => 200, :body => labels_json[card_id], :headers => {})
 
+      stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/actions?filter=commentCard&key=#{key}&token=#{token}").
+        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
+        to_return(:status => 200, :body => comments_json[card_id], :headers => {})
     end
 
   end

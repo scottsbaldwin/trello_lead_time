@@ -26,16 +26,22 @@ module TrelloLeadTime
       response = default_format
       return response if list.nil?
 
-      response[:lead_time][:overall] = list.total_lead_time
+      response[:lead_time][:overall]  = list.total_lead_time
       response[:queue_time][:overall] = list.total_queue_time
       response[:cycle_time][:overall] = list.total_cycle_time
-      response[:age][:overall] = list.total_age
+      response[:age][:overall]        = list.total_age
 
       breakdown_by_labels = list.breakdown_by_labels(Config.finance_type_labels)
-      response[:lead_time][:finance_types] = breakdown_by_labels[:total][:lead_time]
+      response[:lead_time][:finance_types]  = breakdown_by_labels[:total][:lead_time]
       response[:queue_time][:finance_types] = breakdown_by_labels[:total][:queue_time]
       response[:cycle_time][:finance_types] = breakdown_by_labels[:total][:cycle_time]
-      response[:age][:finance_types] = breakdown_by_labels[:total][:age]
+      response[:age][:finance_types]        = breakdown_by_labels[:total][:age]
+
+      breakdown_by_tags = list.breakdown_by_tags
+      response[:lead_time][:initiatives]  = breakdown_by_tags[:total][:lead_time]
+      response[:queue_time][:initiatives] = breakdown_by_tags[:total][:queue_time]
+      response[:cycle_time][:initiatives] = breakdown_by_tags[:total][:cycle_time]
+      response[:age][:initiatives]        = breakdown_by_tags[:total][:age]
       response
     end
 
@@ -44,16 +50,22 @@ module TrelloLeadTime
       response = default_format
       return response if list.nil?
 
-      response[:lead_time][:overall] = list.average_lead_time
+      response[:lead_time][:overall]  = list.average_lead_time
       response[:queue_time][:overall] = list.average_queue_time
       response[:cycle_time][:overall] = list.average_cycle_time
-      response[:age][:overall] = list.average_age
+      response[:age][:overall]        = list.average_age
 
       breakdown_by_labels = list.breakdown_by_labels(Config.finance_type_labels)
-      response[:lead_time][:finance_types] = breakdown_by_labels[:average][:lead_time]
+      response[:lead_time][:finance_types]  = breakdown_by_labels[:average][:lead_time]
       response[:queue_time][:finance_types] = breakdown_by_labels[:average][:queue_time]
       response[:cycle_time][:finance_types] = breakdown_by_labels[:average][:cycle_time]
-      response[:age][:finance_types] = breakdown_by_labels[:average][:age]
+      response[:age][:finance_types]        = breakdown_by_labels[:average][:age]
+
+      breakdown_by_tags = list.breakdown_by_tags
+      response[:lead_time][:initiatives]  = breakdown_by_tags[:average][:lead_time]
+      response[:queue_time][:initiatives] = breakdown_by_tags[:average][:queue_time]
+      response[:cycle_time][:initiatives] = breakdown_by_tags[:average][:cycle_time]
+      response[:age][:initiatives]        = breakdown_by_tags[:average][:age]
       response
     end
 

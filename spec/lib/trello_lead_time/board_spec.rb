@@ -48,6 +48,15 @@ describe TrelloLeadTime::Board do
     }
   }
 
+  let(:comments_json) {
+    {
+      "1111" => File.read(File.expand_path("../../../fixtures/comments.1111.json", __FILE__)),
+      "2222" => File.read(File.expand_path("../../../fixtures/comments.2222.json", __FILE__)),
+      "3333" => File.read(File.expand_path("../../../fixtures/comments.3333.json", __FILE__)),
+      "4444" => File.read(File.expand_path("../../../fixtures/comments.4444.json", __FILE__))
+    }
+  }
+
   subject { TrelloLeadTime::Board.from_url(board_url) }
 
   describe ".totals" do
@@ -91,6 +100,26 @@ describe TrelloLeadTime::Board do
     it "should have an age breakdown by finance type" do
       stub_all_requests
       totals[:age][:finance_types].should == {"CapEx" => 1664755, "OpEx" => 474615}
+    end
+
+    it "should have a lead time breakdown by initiative" do
+      stub_all_requests
+      totals[:lead_time][:initiatives].should == {"#tag1" => 428155, "#tag2" => 1711215, "#tag3" => 2373000}
+    end
+
+    it "should have a queue time breakdown by initiative" do
+      stub_all_requests
+      totals[:queue_time][:initiatives].should == {"#tag1" => 327355, "#tag2" => 714000, "#tag3" => 1656000}
+    end
+
+    it "should have a cycle time breakdown by initiative" do
+      stub_all_requests
+      totals[:cycle_time][:initiatives].should == {"#tag1" => 100800, "#tag2" => 997215, "#tag3" => 717000}
+    end
+
+    it "should have an age breakdown by initiative" do
+      stub_all_requests
+      totals[:age][:initiatives].should == {"#tag1" => 428155, "#tag2" => 1711215, "#tag3" => 2373000}
     end
   end
 
@@ -136,6 +165,26 @@ describe TrelloLeadTime::Board do
       stub_all_requests
       averages[:age][:finance_types].should == {"CapEx" => 832378, "OpEx" => 474615}
     end
+
+    it "should have an average lead time breakdown by initiative" do
+      stub_all_requests
+      averages[:lead_time][:initiatives].should == {"#tag1" => 428155, "#tag2" => 855608, "#tag3" => 2373000}
+    end
+
+    it "should have an average queue time breakdown by initiative" do
+      stub_all_requests
+      averages[:queue_time][:initiatives].should == {"#tag1" => 327355, "#tag2" => 357000, "#tag3" => 1656000}
+    end
+
+    it "should have an average cycle time breakdown by initiative" do
+      stub_all_requests
+      averages[:cycle_time][:initiatives].should == {"#tag1" => 100800, "#tag2" => 498608, "#tag3" => 717000}
+    end
+
+    it "should have an average age breakdown by initiative" do
+      stub_all_requests
+      averages[:age][:initiatives].should == {"#tag1" => 428155, "#tag2" => 855608, "#tag3" => 2373000}
+    end
   end
 
   private
@@ -175,6 +224,10 @@ describe TrelloLeadTime::Board do
       stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/labels?key=#{key}&token=#{token}").
         with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
         to_return(:status => 200, :body => labels_json[card_id], :headers => {})
+
+      stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/actions?filter=commentCard&key=#{key}&token=#{token}").
+        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
+        to_return(:status => 200, :body => comments_json[card_id], :headers => {})
     end
   end
 

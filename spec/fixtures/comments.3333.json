@@ -1,0 +1,56 @@
+[
+      {
+            "id": "666666",
+            "idMemberCreator": "555555",
+            "data": {
+                  "board": {
+                        "shortLink": "87361",
+                        "name": "Mobile",
+                        "id": "123456"
+                  },
+                  "card": {
+                        "shortLink": "876361",
+                        "idShort": 122,
+                        "name": "some card name",
+                        "id": "83716489"
+                  },
+                  "text": "#tag2"
+            },
+            "type": "commentCard",
+            "date": "2014-05-12T14:14:59.223Z",
+            "memberCreator": {
+                  "id": "981736",
+                  "avatarHash": "813747ajsdb",
+                  "fullName": "John Tyler",
+                  "initials": "JT",
+                  "username": "johntyler"
+            }
+      },
+      {
+            "id": "666666",
+            "idMemberCreator": "555555",
+            "data": {
+                  "board": {
+                        "shortLink": "87361",
+                        "name": "Mobile",
+                        "id": "123456"
+                  },
+                  "card": {
+                        "shortLink": "876361",
+                        "idShort": 122,
+                        "name": "some card name",
+                        "id": "83716489"
+                  },
+                  "text": "This is not a hashtag"
+            },
+            "type": "commentCard",
+            "date": "2014-05-12T14:14:59.223Z",
+            "memberCreator": {
+                  "id": "981736",
+                  "avatarHash": "813747ajsdb",
+                  "fullName": "John Tyler",
+                  "initials": "JT",
+                  "username": "johntyler"
+            }
+      }
+]
