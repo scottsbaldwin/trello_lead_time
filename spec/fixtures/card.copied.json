@@ -1,0 +1,43 @@
+{
+    "badges": {
+        "attachments": 1,
+        "checkItems": 0,
+        "checkItemsChecked": 0,
+        "comments": 8,
+        "description": true,
+        "due": "2014-06-13T16:00:00.000Z",
+        "fogbugz": "",
+        "subscribed": false,
+        "viewingMemberVoted": false,
+        "votes": 0
+    },
+    "checkItemStates": [],
+    "closed": false,
+    "dateLastActivity": "2014-05-20T20:57:27.749Z",
+    "desc": "Sorting dropdown is not available in right corner of results page for CSX members.",
+    "descData": null,
+    "due": "2014-06-13T16:00:00.000Z",
+    "id": "53725c8bdff8e1fa15e372e4",
+    "idAttachmentCover": "53725c8cdff8e1fa15e372e6",
+    "idBoard": "520d5aa09b5a997f5a000e6b",
+    "idChecklists": [],
+    "idList": "536d4d530b76b3fe7435a072",
+    "idMembers": [
+        "520a6b6fd1d45394140038dc",
+        "5205800dd1e439ae31002495",
+        "520557cd7c576964440039ed",
+        "5304d05539da911e1c7f8674"
+    ],
+    "idShort": 1112,
+    "labels": [
+        {
+            "color": "purple",
+            "name": "CapEx"
+        }
+    ],
+    "manualCoverAttachment": false,
+    "name": "SPIKE:  Sorting dropdown is not available for CSX members.(DEF020110)",
+    "pos": 144,
+    "shortUrl": "https://trello.com/c/ACYh6u9c",
+    "url": "https://trello.com/c/ACYh6u9c/1112-spike-sorting-dropdown-is-not-available-for-csx-members-def020110"
+}

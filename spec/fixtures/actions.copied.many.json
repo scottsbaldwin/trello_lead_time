@@ -1,0 +1,152 @@
+[
+	{
+		"id": "53879d88875d3e408d7cc1a9",
+		"idMemberCreator": "5148b990bb8ad6045b003b1f",
+		"data": {
+			"listAfter": {
+				"name": "Done for 2014-05-16",
+				"id": "536d4d530b76b3fe7435a072"
+			},
+			"listBefore": {
+				"name": "Development",
+				"id": "520d5ac74fd0cd3a5d000b80"
+			},
+			"board": {
+				"shortLink": "2nROp5bq",
+				"name": "Transp Backend",
+				"id": "520d5aa09b5a997f5a000e6b"
+			},
+			"card": {
+				"shortLink": "jht1p9H4",
+				"idShort": 1144,
+				"name": "TEST: Copied card in done column",
+				"id": "538797063ecd8f643503316e",
+				"idList": "536d4d530b76b3fe7435a072"
+			},
+			"old": {
+				"idList": "520d5ac74fd0cd3a5d000b80"
+			}
+		},
+		"type": "updateCard",
+		"date": "2014-05-29T20:50:16.375Z",
+		"memberCreator": {
+			"id": "5148b990bb8ad6045b003b1f",
+			"avatarHash": "4e71215f2b8bfed0e9812634e35d5648",
+			"fullName": "Scott Baldwin",
+			"initials": "SSB",
+			"username": "scottsbaldwin"
+		}
+	},
+	{
+		"id": "53879d78281ca563163800fd",
+		"idMemberCreator": "5148b990bb8ad6045b003b1f",
+		"data": {
+			"listAfter": {
+				"name": "Development",
+				"id": "520d5ac74fd0cd3a5d000b80"
+			},
+			"listBefore": {
+				"name": "Acceptance",
+				"id": "520d5ad05327daf13100050a"
+			},
+			"board": {
+				"shortLink": "2nROp5bq",
+				"name": "Transp Backend",
+				"id": "520d5aa09b5a997f5a000e6b"
+			},
+			"card": {
+				"shortLink": "jht1p9H4",
+				"idShort": 1144,
+				"name": "TEST: Copied card in done column",
+				"id": "538797063ecd8f643503316e",
+				"idList": "520d5ac74fd0cd3a5d000b80"
+			},
+			"old": {
+				"idList": "520d5ad05327daf13100050a"
+			}
+		},
+		"type": "updateCard",
+		"date": "2014-05-29T20:50:00.913Z",
+		"memberCreator": {
+			"id": "5148b990bb8ad6045b003b1f",
+			"avatarHash": "4e71215f2b8bfed0e9812634e35d5648",
+			"fullName": "Scott Baldwin",
+			"initials": "SSB",
+			"username": "scottsbaldwin"
+		}
+	},
+	{
+		"id": "53879d6fc3b3e6c69e4e09bf",
+		"idMemberCreator": "5148b990bb8ad6045b003b1f",
+		"data": {
+			"listAfter": {
+				"name": "Acceptance",
+				"id": "520d5ad05327daf13100050a"
+			},
+			"listBefore": {
+				"name": "Done for 2014-05-16",
+				"id": "536d4d530b76b3fe7435a072"
+			},
+			"board": {
+				"shortLink": "2nROp5bq",
+				"name": "Transp Backend",
+				"id": "520d5aa09b5a997f5a000e6b"
+			},
+			"card": {
+				"shortLink": "jht1p9H4",
+				"idShort": 1144,
+				"name": "TEST: Copied card in done column",
+				"id": "538797063ecd8f643503316e",
+				"idList": "520d5ad05327daf13100050a"
+			},
+			"old": {
+				"idList": "536d4d530b76b3fe7435a072"
+			}
+		},
+		"type": "updateCard",
+		"date": "2014-05-29T20:49:51.716Z",
+		"memberCreator": {
+			"id": "5148b990bb8ad6045b003b1f",
+			"avatarHash": "4e71215f2b8bfed0e9812634e35d5648",
+			"fullName": "Scott Baldwin",
+			"initials": "SSB",
+			"username": "scottsbaldwin"
+		}
+	},
+	{
+		"id": "538797063ecd8f643503316f",
+		"idMemberCreator": "5148b990bb8ad6045b003b1f",
+		"data": {
+			"cardSource": {
+				"shortLink": "7odj0Q15",
+				"idShort": 1143,
+				"name": "TEST: Created card in done column",
+				"id": "538796f94b1ed3dad0b28330"
+			},
+			"board": {
+				"shortLink": "2nROp5bq",
+				"name": "Transp Backend",
+				"id": "520d5aa09b5a997f5a000e6b"
+			},
+			"list": {
+				"name": "Done for 2014-05-16",
+				"id": "536d4d530b76b3fe7435a072"
+			},
+			"card": {
+				"shortLink": "jht1p9H4",
+				"idShort": 1144,
+				"name": "TEST: Copied card in done column",
+				"id": "538797063ecd8f643503316e"
+			}
+		},
+		"type": "copyCard",
+		"date": "2014-05-29T20:22:30.817Z",
+		"memberCreator": {
+			"id": "5148b990bb8ad6045b003b1f",
+			"avatarHash": "4e71215f2b8bfed0e9812634e35d5648",
+			"fullName": "Scott Baldwin",
+			"initials": "SSB",
+			"username": "scottsbaldwin"
+		}
+	}
+]

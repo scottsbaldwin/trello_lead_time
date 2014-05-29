@@ -202,7 +202,7 @@ describe TrelloLeadTime::List do
 
   def stub_card_requests
     %w{1111 2222 3333 4444}.each do |card_id|
-      stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/actions?filter=createCard,updateCard:idList,updateCard:closed&key=#{key}&token=#{token}").
+      stub_request(:get, "https://api.trello.com/1/cards/#{card_id}/actions?filter=copyCard,moveCardToBoard,createCard,updateCard:idList,updateCard:closed&key=#{key}&token=#{token}").
         with(headers).
         to_return(stub_returns(actions_json[card_id]))
 

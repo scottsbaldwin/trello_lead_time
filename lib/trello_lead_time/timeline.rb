@@ -49,7 +49,7 @@ module TrelloLeadTime
     end
 
     def filtered_actions
-      @trello_card.actions(filter: 'createCard,updateCard:idList,updateCard:closed').map { |action| Action.from_trello_action(action) }
+      @trello_card.actions(filter: 'copyCard,moveCardToBoard,createCard,updateCard:idList,updateCard:closed').map { |action| Action.from_trello_action(action) }
     end
 
     def creation_date
@@ -58,6 +58,7 @@ module TrelloLeadTime
     end
 
     def calculate_age_in_seconds(start_time, end_time)
+      return 0 unless start_time && end_time
       (end_time - start_time).round(0)
     end
 
@@ -122,7 +123,7 @@ module TrelloLeadTime
     end
 
     def list_from_result_of_action(action)
-      if action.type == "createCard"
+      if %w{createCard copyCard moveCardToBoard}.include?(action.type)
         action.data["list"]
       elsif action.type == "updateCard" && action.data.has_key?("old") && action.data["old"].has_key?("idList")
         action.data["listAfter"]
