@@ -1,6 +1,8 @@
+require_relative 'array_searcher'
+
 module TrelloLeadTime
   class Timeline
-    include ArraySearcher
+    include TrelloLeadTime::ArraySearcher
 
     def self.for_trello_card(trello_card)
       Timeline.new(trello_card)
