@@ -13,6 +13,10 @@ module TrelloLeadTime
       @trello_card.name
     end
 
+    def short_url
+      @trello_card.short_url
+    end
+
     def done?
       @timeline.done?
     end

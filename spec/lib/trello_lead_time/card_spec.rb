@@ -37,6 +37,13 @@ describe TrelloLeadTime::Card do
         to_return(:status => 200, :body => comments_json, :headers => {})
     }
 
+    describe "#short_url" do
+      it "should have a url" do
+        expect(subject.short_url).to_not be_nil
+
+      end
+    end
+
     describe ".done" do
       it "should be a card" do
         subject.should be_an_instance_of(TrelloLeadTime::Card)
