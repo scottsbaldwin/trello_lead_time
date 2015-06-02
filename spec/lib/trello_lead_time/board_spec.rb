@@ -11,6 +11,7 @@ describe TrelloLeadTime::Board do
   let(:board_id) { "myboard_id" }
   let(:board_name) { "Development Team" }
   let(:list_with_done_cards) { "Done for 2014-03" }
+  let(:list_not_found_on_board) { "Not a real list" }
   let(:list_id) { "mylist_id" }
   let(:card_id) { "mycard_id" }
 
@@ -24,6 +25,10 @@ describe TrelloLeadTime::Board do
 
   let(:lists_json) {
     File.read(File.expand_path("../../../fixtures/lists.json", __FILE__))
+  }
+
+  let(:missing_lists_json) {
+    File.read(File.expand_path("../../../fixtures/missing_lists.json", __FILE__))
   }
 
   let(:cards_json) {
@@ -63,7 +68,11 @@ describe TrelloLeadTime::Board do
     it "should have some cards" do
       stub_all_requests
       expect(subject.cards(list_with_done_cards).length).to eq(4)
-      puts subject.cards(list_with_done_cards)[0].cycle_time
+    end
+
+    it "should default an empty list of cards when list is not found" do
+      stub_all_requests_missing_list
+      expect(subject.cards(list_not_found_on_board).length).to eq(0)
     end
   end
 
@@ -203,6 +212,11 @@ describe TrelloLeadTime::Board do
     stub_card_requests
   end
 
+  def stub_all_requests_missing_list
+    stub_board_requests
+    stub_missing_list_requests
+  end
+
   def stub_board_requests
     stub_request(:get, "https://api.trello.com/1/organizations/wellmatch?key=#{key}&token=#{token}").
       with(headers).
@@ -221,6 +235,12 @@ describe TrelloLeadTime::Board do
     stub_request(:get, "https://api.trello.com/1/lists/#{list_id}/cards?filter=open&key=#{key}&token=#{token}").
       with(headers).
       to_return(stub_returns(cards_json))
+  end
+
+  def stub_missing_list_requests
+    stub_request(:get, "https://api.trello.com/1/boards/#{board_id}/lists?filter=all&key=#{key}&token=#{token}").
+      with(headers).
+      to_return(stub_returns(missing_lists_json))
   end
 
   def stub_card_requests

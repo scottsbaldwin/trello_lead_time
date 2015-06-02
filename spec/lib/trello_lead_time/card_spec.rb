@@ -40,7 +40,6 @@ describe TrelloLeadTime::Card do
     describe "#short_url" do
       it "should have a url" do
         expect(subject.short_url).to_not be_nil
-
       end
     end
 
