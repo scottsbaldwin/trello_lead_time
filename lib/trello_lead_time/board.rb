@@ -21,6 +21,13 @@ module TrelloLeadTime
       @trello_board.name
     end
 
+    def cards(name_of_list_with_done_cards)
+      list = find_list_by_name(name_of_list_with_done_cards)
+      response = default_format
+      return response if list.nil?
+      list.done_or_closed_cards
+    end
+
     def totals(name_of_list_with_done_cards)
       list = find_list_by_name(name_of_list_with_done_cards)
       response = default_format

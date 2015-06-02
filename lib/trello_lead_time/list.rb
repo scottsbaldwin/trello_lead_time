@@ -122,11 +122,11 @@ module TrelloLeadTime
       times
     end
 
-    private
-
     def done_or_closed_cards
       @_done_or_closed_cards ||= cards.select { |c| c.done? || c.closed? }
     end
+
+    private
 
     def cards
       @_cards ||= @trello_list.cards.map { |c| TrelloLeadTime::Card.from_trello_card(c) }

@@ -59,6 +59,14 @@ describe TrelloLeadTime::Board do
 
   subject { TrelloLeadTime::Board.from_url(board_url) }
 
+  describe '#cards' do
+    it "should have some cards" do
+      stub_all_requests
+      expect(subject.cards(list_with_done_cards).length).to eq(4)
+      puts subject.cards(list_with_done_cards)[0].cycle_time
+    end
+  end
+
   describe ".totals" do
     let(:totals) { subject.totals(list_with_done_cards) }
 

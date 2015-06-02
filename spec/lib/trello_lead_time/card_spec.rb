@@ -58,21 +58,21 @@ describe TrelloLeadTime::Card do
 
     describe ".has_label_name?" do
       it "should not have a named label" do
-        subject.has_label_name?("blah").should be_false
+        expect(subject.has_label_name?("blah")).to eq(false)
       end
 
       it "should have a named label" do
-        subject.has_label_name?("ios").should be_true
+        expect(subject.has_label_name?("ios")).to eq(true)
       end
     end
 
     describe ".has_label_color?" do
       it "should not have a color label" do
-        subject.has_label_color?("yellow").should be_false
+        expect(subject.has_label_color?("yellow")).to eq(false)
       end
 
       it "should have a color label" do
-        subject.has_label_color?("Green").should be_true
+        expect(subject.has_label_color?("Green")).to eq(true)
       end
     end
   end
